@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="離線 CSV 匯出差異比對器：比較兩次訂單或商品資料匯出，找出新增、消失及逐欄變更。一次購買 NT$299，檔案不需上傳。">
+  <meta name="theme-color" content="#f5f2eb">
+  <link rel="canonical" href="https://x213212.github.io/online-data-service/csv-snapshot-compare.html">
+  <link rel="sitemap" type="application/xml" href="https://x213212.github.io/online-data-service/sitemap.xml">
+  <title>CSV 匯出差異比對器｜離線數位工具｜清序工作室</title>
+  <style>
+    :root{color-scheme:light;--ink:#172c30;--muted:#52666a;--paper:#f5f2eb;--white:#fffefa;--green:#146b5f;--line:#cdd4cf;--lime:#d8edbe}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Noto Sans TC",sans-serif}a{color:var(--green)}
+    a:focus-visible{outline:3px solid #b96430;outline-offset:3px}.wrap{width:min(850px,calc(100% - 36px));margin:auto}
+    header{border-bottom:1px solid var(--line);background:var(--white)}header .wrap{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:15px}header a{text-decoration:none;font-weight:750}
+    main{padding:52px 0 80px}.eyebrow{color:var(--green);font-weight:750;letter-spacing:.1em;font-size:.85rem}h1{font-size:clamp(2.4rem,5vw,4rem);line-height:1.2;letter-spacing:-.05em;margin:12px 0 20px}h2{font-size:1.55rem;line-height:1.3;margin:0 0 16px}
+    .lead{font-size:1.1rem;color:var(--muted);max-width:690px}.price{font-size:1.7rem;font-weight:800;margin:18px 0}.button{display:inline-block;background:var(--green);color:white;text-decoration:none;border-radius:8px;padding:12px 22px;font-weight:700}
+    .panel{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:28px;margin:28px 0}.panel ul{margin:0;padding-left:22px}.panel li{margin:8px 0}.note{color:var(--muted);font-size:.92rem}
+    table{border-collapse:collapse;width:100%;min-width:500px}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left}th{background:var(--lime)}.scroll{overflow:auto}
+    footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.87rem}@media(max-width:620px){.panel{padding:20px}main{padding-top:35px}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a href="index.html">清序工作室</a><a href="index.html#services">線上資料服務 ↗</a></div></header>
+  <main class="wrap">
+    <div class="eyebrow">離線數位工具 · 2026 年 11 月</div>
+    <h1>兩次 CSV 匯出，<br>差在哪裡？</h1>
+    <p class="lead">用「CSV 匯出差異比對器」找出新增、消失與欄位變更的訂單或商品資料。解壓縮後直接在瀏覽器開啟，檔案留在你的電腦，不需登入或上傳。</p>
+    <div class="price">一次購買 NT$299</div>
+    <a class="button" href="https://qingshu-data-inquiry.x213212.chatgpt.site/#inquiry">詢問購買與交付方式 →</a>
+    <p class="note">表單選「其他線上資料工作」，在說明填「CSV 匯出差異比對器」。目前由人工確認付款方式與交付，沒有自動結帳；詢問時請勿附真實訂單或個資。</p>
+
+    <section class="panel"><h2>你會拿到什麼</h2><ul>
+      <li>可離線使用的瀏覽器工具：選兩份 UTF-8 CSV 和一個唯一識別欄位，即可比對。</li>
+      <li>畫面顯示舊檔、新檔、新增、消失、變更與未變更的筆數。</li>
+      <li>下載逐欄差異 CSV，包含新增與消失紀錄的欄位值；原始檔不會被修改。</li>
+      <li>兩份虛構訂單範例與操作說明，可先核對預期結果。</li>
+    </ul></section>
+
+    <section class="panel"><h2>虛構資料示例</h2><div class="scroll"><table><thead><tr><th>訂單編號</th><th>舊檔</th><th>新檔</th><th>結果</th></tr></thead><tbody>
+      <tr><td>001</td><td>已付款</td><td>已出貨</td><td>狀態變更</td></tr>
+      <tr><td>002</td><td>桌燈</td><td>桌燈</td><td>未變更</td></tr>
+      <tr><td>003</td><td>椅墊</td><td>—</td><td>舊檔有、新檔無</td></tr>
+      <tr><td>004</td><td>—</td><td>書架</td><td>新檔新增</td></tr>
+    </tbody></table></div><p class="note">這是自製合成範例，不是客戶資料或成交紀錄。編號 <code>001</code> 會保留為文字，不變成數字 1。</p></section>
+
+    <section class="panel"><h2>購買前先確認限制</h2><p>支援 UTF-8、逗號分隔 CSV，單檔 5 MB 內。兩份檔案的欄名須相同，順序可以不同；指定的識別欄位不得空白或重複。遇到重複欄名、欄數不一致或無法判定的識別值會停止，不自行猜測。工具只比較文字，不判斷哪個價格、庫存或訂單狀態正確，也不直接連到蝦皮、Shopify 或其他賣場。</p><p>此工具由 AI 協助製作，已用虛構資料驗證主要比對與錯誤處理。若你的檔案格式不同，可先詢問是否需要另行報價的客製整理。</p></section>
+
+    <section class="panel"><h2>如何取得</h2><p>先在免登入表單留下聯絡方式並註明工具名稱。我會確認交付格式、可用付款方式與使用範圍；雙方同意後才付款，收到款項後提供 ZIP 下載檔。付款前不需提供真實檔案。</p><a class="button" href="https://qingshu-data-inquiry.x213212.chatgpt.site/#inquiry">詢問購買 →</a></section>
+  </main>
+  <footer><div class="wrap">© 2026 清序工作室 · 數位工具與線上資料服務</div></footer>
+</body>
+</html>

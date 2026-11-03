@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://x213212.github.io/online-data-service/</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
   </url>
   <url>
     <loc>https://x213212.github.io/online-data-service/en.html</loc>
@@ -13,4 +13,5 @@
     <lastmod>2026-11-03</lastmod>
   </url>
   <url><loc>https://x213212.github.io/online-data-service/product-csv-checklist.html</loc><lastmod>2026-11-03</lastmod></url>
+  <url><loc>https://x213212.github.io/online-data-service/csv-snapshot-compare.html</loc><lastmod>2026-11-04</lastmod></url>
 </urlset>
