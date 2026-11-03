@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="協助小型團隊整理 Excel、CSV 與商品資料。線上討論、明確範圍、交付可核對的檔案。">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>清序工作室｜把資料整理成能用的樣子</title>
+  <style>
+    :root { color-scheme: light; --ink:#172c30; --muted:#55676b; --paper:#f5f2eb; --white:#fffefa; --line:#cdd4cf; --green:#146b5f; --lime:#d8edbe; --orange:#d98a55; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif; line-height:1.6; }
+    a { color:inherit; }
+    a:focus-visible, button:focus-visible { outline:3px solid var(--orange); outline-offset:4px; }
+    .wrap { width:min(1120px,calc(100% - 40px)); margin:auto; }
+    header { border-bottom:1px solid var(--line); background:rgba(245,242,235,.95); position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); }
+    .nav { min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { font-size:1.18rem; font-weight:800; letter-spacing:.08em; text-decoration:none; white-space:nowrap; }
+    .brand span { color:var(--green); }
+    nav { display:flex; gap:clamp(12px,2vw,28px); align-items:center; font-size:.94rem; }
+    nav a { text-decoration:none; }
+    nav a:hover { color:var(--green); text-decoration:underline; }
+    .nav-cta { border:1px solid var(--ink); padding:8px 16px; border-radius:100px; white-space:nowrap; }
+    .hero { padding:85px 0 95px; overflow:hidden; }
+    .hero-grid { display:grid; grid-template-columns:1.02fr .98fr; gap:5%; align-items:center; }
+    .eyebrow { display:inline-flex; align-items:center; gap:10px; color:var(--green); font-weight:700; font-size:.88rem; letter-spacing:.14em; }
+    .eyebrow::before { content:""; width:27px; border-top:2px solid currentColor; }
+    h1 { font-size:clamp(2.7rem,5vw,5rem); line-height:1.19; letter-spacing:-.065em; margin:18px 0 24px; font-weight:800; }
+    .hero p { font-size:1.15rem; color:var(--muted); max-width:35rem; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:51px; padding:11px 23px; border-radius:8px; text-decoration:none; font-weight:700; transition:transform .15s,background .15s; }
+    .button:hover { transform:translateY(-2px); }
+    .button.primary { background:var(--green); color:white; }
+    .button.primary:hover { background:#0e554b; }
+    .button.secondary { border:1px solid var(--ink); }
+    .note { margin-top:20px; font-size:.87rem!important; }
+    .visual { min-height:460px; padding:35px; border-radius:24px; background:var(--ink); position:relative; box-shadow:18px 20px 0 var(--lime); }
+    .visual::before { content:""; position:absolute; width:180px; height:180px; right:-65px; top:-48px; border-radius:50%; background:var(--orange); z-index:-1; }
+    .sheet { background:var(--white); border-radius:12px; padding:22px; transform:rotate(-4deg); box-shadow:0 18px 30px #081b1d50; }
+    .sheet-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; font-weight:800; }
+    .badge { background:var(--lime); color:var(--ink); border-radius:100px; padding:4px 10px; font-size:.72rem; }
+    table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    th,td { border-bottom:1px solid #dde2dd; padding:12px 6px; text-align:left; }
+    th { color:var(--muted); font-size:.72rem; font-weight:650; }
+    .pill { border-radius:100px; padding:3px 8px; display:inline-block; background:#e4eee7; color:#27604a; font-size:.72rem; }
+    .pill.warn { background:#fff0da; color:#955b23; }
+    .visual-foot { position:absolute; bottom:29px; right:23px; color:white; letter-spacing:.12em; font-size:.8rem; }
+    section { padding:90px 0; }
+    .section-head { max-width:680px; margin-bottom:38px; }
+    .section-head h2 { font-size:clamp(2rem,3.8vw,3rem); line-height:1.25; letter-spacing:-.04em; margin:12px 0; }
+    .section-head p { color:var(--muted); }
+    .services { background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:17px; }
+    .card { border:1px solid var(--line); border-radius:14px; padding:28px; min-height:273px; display:flex; flex-direction:column; }
+    .card .num { color:var(--green); font-weight:800; letter-spacing:.15em; font-size:.82rem; }
+    .card h3 { margin:25px 0 9px; font-size:1.28rem; }
+    .card p { margin:0; color:var(--muted); font-size:.96rem; }
+    .card .price { margin-top:auto; padding-top:26px; font-weight:800; }
+    .process-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .step { padding:26px 0; border-top:2px solid var(--green); }
+    .step strong { font-size:1.25rem; }
+    .step p { color:var(--muted); margin-bottom:0; }
+    .demo { background:var(--lime); }
+    .demo-grid { display:grid; grid-template-columns:1fr 1fr; gap:7%; align-items:center; }
+    .demo-panel { background:var(--white); padding:30px; border:1px solid #aec9a3; border-radius:15px; box-shadow:12px 12px 0 #a9c896; }
+    .demo-panel h3 { margin:0 0 15px; }
+    .demo-panel ul { padding-left:20px; margin-bottom:0; }
+    .demo-panel li { margin:9px 0; }
+    .demo p { color:#3b5e4e; }
+    .contact { text-align:center; padding:105px 0; }
+    .contact h2 { font-size:clamp(2.1rem,4vw,3.5rem); letter-spacing:-.045em; margin:15px 0; }
+    .contact p { color:var(--muted); max-width:580px; margin:0 auto 27px; }
+    footer { border-top:1px solid var(--line); padding:24px 0 36px; color:var(--muted); font-size:.84rem; }
+    footer .wrap { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+    @media (max-width:750px) { .hero { padding:55px 0 70px; } .hero-grid,.demo-grid { grid-template-columns:1fr; } .visual { margin:20px 15px 0 0; min-height:380px; } .cards,.process-grid { grid-template-columns:1fr; } .card { min-height:auto; } nav a:not(.nav-cta) { display:none; } section { padding:70px 0; } .contact { padding:80px 0; } }
+    @media (max-width:420px) { .wrap { width:min(100% - 28px,1120px); } .visual { padding:18px; min-height:335px; } .sheet { padding:13px; } th,td { padding:8px 3px; font-size:.69rem; } .visual-foot { bottom:14px; font-size:.66rem; } .nav { min-height:62px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">清序<span> / </span>工作室</a>
+      <nav aria-label="主選單">
+        <a href="#services">服務</a><a href="#process">合作方式</a><a href="#demo">作品示例</a><a class="nav-cta" href="#contact">詢問合作 ↗</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <div class="hero"><div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">純線上交付 · 清楚報價</div>
+        <h1>把混亂資料<br>整理成能用的樣子。</h1>
+        <p>訂單表重複、商品欄位不齊、CSV 匯入卡住？從一份小檔案開始，交付乾淨資料與可追溯的問題清單。</p>
+        <div class="actions"><a class="button primary" href="mailto:x8795278@gmail.com?subject=%E8%B3%87%E6%96%99%E6%95%B4%E7%90%86%E5%90%88%E4%BD%9C%E8%A9%A2%E5%95%8F">寄信詢問合作 →</a><a class="button secondary" href="#services">查看服務範圍</a></div>
+        <p class="note">僅需提供範例欄位與需求；正式資料及費用在確認範圍後再處理。</p>
+      </div>
+      <div class="visual" aria-label="示意表格：資料清理後分為正常與待確認">
+        <div class="sheet"><div class="sheet-head"><span>訂單整理示例</span><span class="badge">DEMO / 虛構資料</span></div>
+          <table><thead><tr><th>訂單</th><th>品項</th><th>金額</th><th>檢查結果</th></tr></thead><tbody>
+            <tr><td>A101</td><td>收納盒</td><td>450</td><td><span class="pill">可匯入</span></td></tr>
+            <tr><td>A102</td><td>桌燈</td><td>980</td><td><span class="pill">可匯入</span></td></tr>
+            <tr><td>A103</td><td>收納架</td><td>—</td><td><span class="pill warn">待確認</span></td></tr>
+            <tr><td>A104</td><td>椅墊</td><td>320</td><td><span class="pill">可匯入</span></td></tr>
+          </tbody></table>
+        </div><div class="visual-foot">整理 · 檢查 · 交付</div>
+      </div>
+    </div></div>
+    <section class="services" id="services"><div class="wrap">
+      <div class="section-head"><div class="eyebrow">01 / 可以交給我的事</div><h2>從一個明確的小範圍開始</h2><p>先確認欄位、筆數、規則和交期，再開始計費。下列價格是常見範圍的起價，特殊格式另報。</p></div>
+      <div class="cards">
+        <article class="card"><div class="num">SERVICE 01</div><h3>Excel / CSV 清理</h3><p>去除完全重複列、統一日期與欄位格式、標出缺值或衝突，附上可核對的異常清單。</p><div class="price">500 列內｜NT$1,500 起</div></article>
+        <article class="card"><div class="num">SERVICE 02</div><h3>商品資料建檔</h3><p>依你提供的商品資訊整理名稱、規格、價格與分類，產出可上架的表格；不代拍攝或處理出貨。</p><div class="price">20 項內｜NT$1,500 起</div></article>
+        <article class="card"><div class="num">SERVICE 03</div><h3>簡易流程工具</h3><p>將重複的表格整理步驟做成可重跑的 Python 小工具，提供操作說明與測試範例。</p><div class="price">依需求報價</div></article>
+      </div>
+    </div></section>
+    <section id="process"><div class="wrap"><div class="section-head"><div class="eyebrow">02 / 合作方式</div><h2>三步驟，知道每一步會拿到什麼</h2></div><div class="process-grid">
+      <div class="step"><strong>01　確認範圍</strong><p>你說明資料格式、數量及預期結果；我回覆交付物、價格與時間。</p></div>
+      <div class="step"><strong>02　線上處理</strong><p>按約定規則整理，遇到無法確定的資料先標記，不擅自猜測。</p></div>
+      <div class="step"><strong>03　交付核對</strong><p>提供整理後檔案、異常清單與簡短說明，依約定範圍修正。</p></div>
+    </div></div></section>
+    <section class="demo" id="demo"><div class="wrap demo-grid">
+      <div><div class="eyebrow">03 / 公開示例</div><h2>先看得見，再談合作</h2><p>公開範例以虛構訂單製作，可檢查檔案結構和資料清理方式。它不是客戶案例，也不含真實個資。</p><a class="button secondary" href="https://github.com/x213212/order-cleanup-demo" target="_blank" rel="noopener noreferrer">查看 GitHub 示例 ↗</a></div>
+      <div class="demo-panel"><h3>範例交付內容</h3><ul><li>整理後的訂單明細</li><li>需要人工確認的異常清單</li><li>處理規則和欄位說明</li><li>可重複執行的程式碼</li></ul></div>
+    </div></section>
+    <section class="contact" id="contact"><div class="wrap"><div class="eyebrow">開始合作</div><h2>先從一份檔案談起。</h2><p>請簡述資料類型、筆數、想解決的問題和希望交付日期。我會先確認能否承接，再提供範圍與報價。</p><a class="button primary" href="mailto:x8795278@gmail.com?subject=%E7%B7%9A%E4%B8%8A%E8%B3%87%E6%96%99%E6%9C%8D%E5%8B%99%E5%90%88%E4%BD%9C">寫信到 x8795278@gmail.com →</a></div></section>
+  </main>
+  <footer><div class="wrap"><span>© 2026 清序工作室 · 線上資料整理服務</span><span>本網站的表格與數字皆為示意資料。</span></div></footer>
+</body>
+</html>
