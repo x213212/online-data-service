@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="全遠端 Excel／CSV 資料清理、商品資料建檔與檢查。500 列資料或 20 項商品 NT$1,500 起，交付整理後檔案與異常清單。">
+  <meta name="description" content="全遠端 Excel／CSV 資料清理、商品資料建檔與檢查。單一 CSV 小檔案試作 NT$500；500 列資料或 20 項商品 NT$1,500 起。">
   <meta name="theme-color" content="#f5f2eb">
   <link rel="canonical" href="https://x213212.github.io/online-data-service/">
   <link rel="sitemap" type="application/xml" href="https://x213212.github.io/online-data-service/sitemap.xml">
@@ -59,6 +59,10 @@
     .card h3 { margin:25px 0 9px; font-size:1.28rem; }
     .card p { margin:0; color:var(--muted); font-size:.96rem; }
     .card .price { margin-top:auto; padding-top:26px; font-weight:800; }
+    .pilot { margin-top:18px; padding:23px 28px; border:2px solid var(--green); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:24px; background:#f0f7eb; }
+    .pilot h3 { margin:0 0 4px; font-size:1.2rem; }
+    .pilot p { margin:0; color:var(--muted); }
+    .pilot .price { font-weight:800; font-size:1.2rem; white-space:nowrap; }
     .process-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
     .step { padding:26px 0; border-top:2px solid var(--green); }
     .step strong { font-size:1.25rem; }
@@ -75,7 +79,7 @@
     .contact p { color:var(--muted); max-width:580px; margin:0 auto 27px; }
     footer { border-top:1px solid var(--line); padding:24px 0 36px; color:var(--muted); font-size:.84rem; }
     footer .wrap { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
-    @media (max-width:750px) { .hero { padding:55px 0 70px; } .hero-grid,.demo-grid { grid-template-columns:1fr; } .visual { margin:20px 15px 0 0; min-height:380px; } .cards,.process-grid { grid-template-columns:1fr; } .card { min-height:auto; } nav a:not(.nav-cta) { display:none; } section { padding:70px 0; } .contact { padding:80px 0; } }
+    @media (max-width:750px) { .hero { padding:55px 0 70px; } .hero-grid,.demo-grid { grid-template-columns:1fr; } .visual { margin:20px 15px 0 0; min-height:380px; } .cards,.process-grid { grid-template-columns:1fr; } .card { min-height:auto; } .pilot { align-items:flex-start; flex-direction:column; } nav a:not(.nav-cta) { display:none; } section { padding:70px 0; } .contact { padding:80px 0; } }
     @media (max-width:420px) { .wrap { width:min(100% - 28px,1120px); } .visual { padding:18px; min-height:335px; } .sheet { padding:13px; } th,td { padding:8px 3px; font-size:.69rem; } .visual-foot { bottom:14px; font-size:.66rem; } .nav { min-height:62px; } }
     @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
   </style>
@@ -116,6 +120,7 @@
         <article class="card"><div class="num">SERVICE 02</div><h3>商品資料建檔</h3><p>依你提供的商品資訊整理名稱、規格、價格與分類，產出可上架的表格；不代拍攝或處理出貨。</p><div class="price">20 項內｜NT$1,500 起</div></article>
         <article class="card"><div class="num">SERVICE 03</div><h3>簡易流程工具</h3><p>將重複的表格整理步驟做成可重跑的 Python 小工具，提供操作說明與測試範例。</p><div class="price">依需求報價</div></article>
       </div>
+      <div class="pilot"><div><h3>單一 CSV 小檔案試作</h3><p>100 筆資料列、5 欄內；檢查空值、完全重複列與欄位數，交付異常清單及可確定修正的 CSV。資料與驗收規則確認後，2 個工作天內交付；不猜測缺漏內容。</p></div><div class="price">固定 NT$500</div></div>
     </div></section>
     <section id="process"><div class="wrap"><div class="section-head"><div class="eyebrow">02 / 合作方式</div><h2>三步驟，知道每一步會拿到什麼</h2></div><div class="process-grid">
       <div class="step"><strong>01　確認範圍</strong><p>你說明資料格式、數量及預期結果；我回覆交付物、價格與時間。</p></div>
