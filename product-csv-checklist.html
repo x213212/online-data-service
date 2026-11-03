@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="商品 CSV 匯入前怎麼檢查？用一份清單核對標題列、重複商品編號、空白名稱、售價格式與圖片欄位，並試用免費的瀏覽器內檢查器。">
+  <meta name="theme-color" content="#f5f2eb">
+  <link rel="canonical" href="https://x213212.github.io/online-data-service/product-csv-checklist.html">
+  <link rel="sitemap" type="application/xml" href="https://x213212.github.io/online-data-service/sitemap.xml">
+  <title>商品 CSV 匯入前檢查清單｜清序工作室</title>
+  <style>
+    :root { color-scheme:light; --ink:#172c30; --muted:#52666a; --paper:#f5f2eb; --white:#fffefa; --green:#146b5f; --line:#cdd4cf; --orange:#b96430; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC",sans-serif; line-height:1.75; }
+    a { color:var(--green); }
+    a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
+    .wrap { width:min(790px,calc(100% - 36px)); margin:auto; }
+    header { border-bottom:1px solid var(--line); background:var(--white); }
+    header .wrap { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:65px; }
+    header a { text-decoration:none; font-weight:750; }
+    main { padding:48px 0 80px; }
+    .eyebrow { color:var(--green); font-weight:750; letter-spacing:.1em; font-size:.84rem; }
+    h1 { font-size:clamp(2.2rem,5vw,3.5rem); line-height:1.22; letter-spacing:-.05em; margin:12px 0 16px; }
+    h2 { font-size:1.55rem; line-height:1.35; margin:0 0 16px; }
+    h3 { font-size:1.15rem; margin:0 0 8px; }
+    .intro { color:var(--muted); font-size:1.08rem; }
+    .panel { background:var(--white); border:1px solid var(--line); border-radius:15px; padding:30px; margin-top:25px; }
+    .panel p:last-child { margin-bottom:0; }
+    .checks { padding-left:22px; margin:0; }
+    .checks li { padding:12px 0; }
+    .checks li + li { border-top:1px solid var(--line); }
+    .checks p { color:var(--muted); margin:4px 0 0; }
+    .example { overflow:auto; }
+    table { width:100%; border-collapse:collapse; min-width:530px; }
+    th,td { border-bottom:1px solid var(--line); padding:9px 12px; text-align:left; }
+    th { background:#e9f0e7; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:20px; }
+    .button { display:inline-block; border-radius:8px; background:var(--green); color:white; padding:11px 18px; text-decoration:none; font-weight:700; }
+    .button.secondary { background:transparent; color:var(--green); border:1px solid var(--green); }
+    .note { color:var(--muted); font-size:.92rem; }
+    footer { border-top:1px solid var(--line); color:var(--muted); font-size:.87rem; padding:22px 0 30px; }
+    @media(max-width:640px) { .panel { padding:20px; } header .wrap { min-height:58px; } main { padding-top:34px; } }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a href="index.html">清序工作室</a><a href="index.html#contact">詢問資料整理合作 ↗</a></div></header>
+  <main class="wrap">
+    <div class="eyebrow">資料整理指南 · 2026 年 11 月 3 日</div>
+    <h1>商品 CSV 匯入前，先檢查這 5 件事</h1>
+    <p class="intro">賣場匯入失敗，常得回頭找一列資料或一個欄位的問題。先保留原始檔，再用下面的清單找出需要人工確認的地方。每個賣場的匯入範本不同，最後仍要對照你目前使用的平台範本。</p>
+
+    <section class="panel" aria-labelledby="list-heading">
+      <h2 id="list-heading">匯入前的檢查清單</h2>
+      <ol class="checks">
+        <li><strong>標題列有沒有空白或重複欄名？</strong><p>先確認每欄的用途，再檢查資料列的欄位數是否一致。不要直接刪除看不懂的欄位。</p></li>
+        <li><strong>商品編號有沒有空白或完全相同的值？</strong><p>相同編號可能是重複資料，也可能是不同規格；先列出來核對，不要自動合併。</p></li>
+        <li><strong>商品名稱有沒有漏填？</strong><p>空白名稱先回查來源。也檢查名稱裡的逗號與引號是否由 CSV 正確包住。</p></li>
+        <li><strong>售價能不能按預期讀成數字？</strong><p>文字、貨幣符號或多餘空白可能影響匯入。先標記有疑問的值，再依平台格式修正。</p></li>
+        <li><strong>圖片欄位有沒有空白？</strong><p>空白值可以先找出來；圖片網址是否可用、圖片是否符合平台規定，仍須另外核對。</p></li>
+      </ol>
+    </section>
+
+    <section class="panel" aria-labelledby="example-heading">
+      <h2 id="example-heading">小例子：先標記，別急著刪</h2>
+      <div class="example"><table><thead><tr><th>商品編號</th><th>商品名稱</th><th>售價</th><th>待確認</th></tr></thead><tbody>
+        <tr><td>A001</td><td>收納盒</td><td>450</td><td>與另一列編號相同</td></tr>
+        <tr><td>A001</td><td>收納盒（大）</td><td>590</td><td>是不同規格，還是編號填錯？</td></tr>
+        <tr><td>A003</td><td>空白</td><td>abc</td><td>缺名稱；售價需核對</td></tr>
+      </tbody></table></div>
+      <p class="note">上表是虛構資料，只示範判斷方式，不是客戶成果。</p>
+      <p>免費的<a href="csv-checker.html">商品 CSV 檢查器</a>可在瀏覽器內列出這類待確認資料，並下載異常清單。它不會替你判斷哪一列該刪，也不保證符合特定賣場的匯入規格。</p>
+      <div class="actions"><a class="button" href="csv-checker.html">用虛構範例試用檢查器 →</a></div>
+    </section>
+
+    <section class="panel" aria-labelledby="help-heading">
+      <h2 id="help-heading">檔案很多，或需要整理成可匯入版本？</h2>
+      <p>可委託我依雙方確認的欄位與規則整理資料，交付整理後檔案、待確認清單和簡短說明。20 項商品資料建檔或 500 列 Excel／CSV 清理，NT$1,500 起；實際價格與交期在確認檔案情況後報價。</p>
+      <p>先在表單寫資料類型、筆數、問題與期望交期即可。詢問階段請勿送出真實檔案或個資。</p>
+      <div class="actions"><a class="button" href="https://qingshu-data-inquiry.x213212.chatgpt.site/#inquiry">免登入詢問合作 →</a><a class="button secondary" href="index.html#services">查看服務範圍</a></div>
+    </section>
+  </main>
+  <footer><div class="wrap">© 2026 清序工作室 · 線上資料整理服務</div></footer>
+</body>
+</html>
