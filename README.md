@@ -1,5 +1,7 @@
 # 線上資料整理服務
 
+[English services and pricing](https://x213212.github.io/online-data-service/en.html) · [Project inquiry in English](https://qingshu-data-inquiry.x213212.chatgpt.site/en#inquiry)
+
 [查看服務、價格與合作方式](https://x213212.github.io/online-data-service/) · [免登入詢問](https://qingshu-data-inquiry.x213212.chatgpt.site/#inquiry)
 
 提供全遠端的 Excel／CSV 資料清理、電商商品資料整理，以及可重跑的 Python 表格處理工具。先確認資料格式、處理規則、交付範圍和驗收方式，再開始工作。
