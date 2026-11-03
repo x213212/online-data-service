@@ -1,0 +1,48 @@
+name: 線上資料整理合作詢問
+description: 說明 Excel／CSV、商品資料或簡易自動化需求；請勿公開真實資料或個資。
+title: "[合作詢問] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        此頁面與回覆都是公開的。請只寫欄位名稱、筆數和預期結果，不要附上真實檔案、客戶資料、帳號或個資。確認範圍與報價後，再約定交付方式。
+  - type: dropdown
+    id: service
+    attributes:
+      label: 需要哪類協助？
+      options:
+        - Excel／CSV 資料清理
+        - 商品資料建檔
+        - Python 流程工具
+        - 其他線上資料工作
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 目前遇到的問題與預期交付
+      description: 用虛構或遮蔽後的範例說明即可。
+      placeholder: 例如：兩份 CSV 的商品編號重複；希望交付合併檔與異常清單。
+    validations:
+      required: true
+  - type: input
+    id: size
+    attributes:
+      label: 大約有多少列或商品？
+      placeholder: 例如：2 份 CSV，共約 500 列
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: 希望的交付日期
+      placeholder: 例如：2026-11-10；若不急可填「可討論」
+    validations:
+      required: true
+  - type: checkboxes
+    id: public-data
+    attributes:
+      label: 公開資料提醒
+      options:
+        - label: 我沒有在此公開真實檔案、客戶資料、密碼或個資。
+          required: true
