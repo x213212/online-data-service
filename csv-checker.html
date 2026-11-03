@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="免費在瀏覽器檢查商品 CSV：重複編號、空白名稱、售價與圖片欄位。檔案不會上傳。">
+  <title>商品 CSV 檢查器｜清序工作室</title>
+  <style>
+    :root { color-scheme:light; --ink:#172c30; --muted:#52666a; --paper:#f5f2eb; --white:#fffefa; --green:#146b5f; --line:#cdd4cf; --orange:#b96430; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif; line-height:1.6; }
+    .wrap { width:min(960px,calc(100% - 36px)); margin:auto; }
+    header { border-bottom:1px solid var(--line); background:var(--white); }
+    header .wrap { display:flex; align-items:center; justify-content:space-between; min-height:65px; gap:20px; }
+    a { color:var(--green); }
+    header a { text-decoration:none; font-weight:750; }
+    main { padding:60px 0 90px; }
+    .eyebrow { color:var(--green); font-weight:750; letter-spacing:.12em; font-size:.85rem; }
+    h1 { font-size:clamp(2.25rem,5vw,3.8rem); line-height:1.2; letter-spacing:-.05em; margin:12px 0 18px; }
+    .intro { max-width:650px; color:var(--muted); font-size:1.08rem; }
+    .panel { background:var(--white); border:1px solid var(--line); border-radius:16px; padding:30px; margin-top:32px; }
+    label { display:block; font-weight:700; }
+    input[type=file] { display:block; width:100%; padding:18px; border:2px dashed #a8bdb5; border-radius:9px; margin-top:12px; background:#f9fbf7; }
+    button, .button { border:0; border-radius:9px; padding:11px 17px; min-height:45px; background:var(--green); color:white; font:inherit; font-weight:700; cursor:pointer; }
+    button.secondary, .button.secondary { background:transparent; color:var(--green); border:1px solid var(--green); }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline:3px solid var(--orange); outline-offset:3px; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    .help { font-size:.91rem; color:var(--muted); margin:13px 0 0; }
+    .mapping { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:20px 0; }
+    select { display:block; width:100%; border:1px solid #aab9b2; border-radius:7px; background:white; padding:10px; font:inherit; margin-top:6px; }
+    .summary { display:flex; gap:14px; flex-wrap:wrap; margin:22px 0; }
+    .stat { border:1px solid var(--line); background:white; border-radius:10px; min-width:130px; padding:12px 18px; }
+    .stat b { display:block; font-size:1.5rem; }
+    .stat span { color:var(--muted); font-size:.86rem; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:9px; }
+    table { width:100%; border-collapse:collapse; background:white; min-width:650px; }
+    th,td { padding:10px 12px; border-bottom:1px solid #e3e7e2; text-align:left; vertical-align:top; }
+    th { background:#ecf2e9; }
+    tr:last-child td { border-bottom:0; }
+    .error { color:#a42d22; font-weight:700; }
+    .cta { border-top:1px solid var(--line); padding-top:28px; margin-top:40px; }
+    [hidden] { display:none!important; }
+    @media(max-width:640px) { .mapping {grid-template-columns:1fr;} .panel {padding:20px;} main {padding-top:38px;} }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><a href="index.html">清序工作室</a><a href="index.html#contact">詢問資料整理合作 ↗</a></div></header>
+  <main class="wrap">
+    <div class="eyebrow">免費工具 · 在你的瀏覽器執行</div>
+    <h1>商品 CSV 檢查器</h1>
+    <p class="intro">找出重複商品編號、空白名稱、價格格式問題與未填圖片欄位。結果可下載成待確認清單。資料只在這個頁面的瀏覽器記憶體中處理，不會傳到伺服器。</p>
+    <section class="panel" aria-labelledby="upload-heading">
+      <h2 id="upload-heading">1. 選一份 CSV</h2>
+      <label for="file">商品資料檔（CSV）</label>
+      <input id="file" type="file" accept=".csv,text/csv">
+      <div class="actions"><button id="sample" class="secondary" type="button">用虛構資料試用</button></div>
+      <p class="help">支援 UTF-8；若無法以 UTF-8 解碼，會嘗試 Big5。上限 5 MB。Excel 檔請先另存成 CSV。報表列號指資料筆數，第一筆資料為第 1 筆。</p>
+      <p id="load-status" role="status"></p>
+    </section>
+    <section id="configure" class="panel" aria-labelledby="mapping-heading" hidden>
+      <h2 id="mapping-heading">2. 對應欄位</h2>
+      <p class="help">找不到對應欄位時，可選擇「不檢查」。商品編號只檢查完全相同的值，不擅自合併不同寫法。</p>
+      <div class="mapping">
+        <label>商品編號<select id="sku"></select></label>
+        <label>商品名稱<select id="name"></select></label>
+        <label>售價<select id="price"></select></label>
+        <label>圖片網址或檔名<select id="image"></select></label>
+      </div>
+      <button id="run" type="button">開始檢查</button>
+    </section>
+    <section id="results" class="panel" aria-labelledby="result-heading" hidden>
+      <h2 id="result-heading">3. 檢查結果</h2>
+      <div id="summary" class="summary"></div>
+      <div class="actions"><button id="download" type="button">下載待確認 CSV</button></div>
+      <p id="result-note" class="help"></p>
+      <div class="table-wrap"><table><thead><tr><th>資料筆數</th><th>商品編號</th><th>商品名稱</th><th>待確認事項</th></tr></thead><tbody id="issues"></tbody></table></div>
+    </section>
+    <div class="cta"><h2>需要把資料整理到可以上架？</h2><p>20 項商品資料建檔 NT$1,500 起。來信說明平台、欄位及數量，我會先確認範圍與報價。</p><a href="mailto:x8795278@gmail.com?subject=%E5%95%86%E5%93%81CSV%E6%95%B4%E7%90%86%E5%90%88%E4%BD%9C">寄信詢問合作 ↗</a></div>
+  </main>
+  <script src="csv-audit.js"></script>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const sample = '商品編號,商品名稱,售價,圖片\r\nA001,收納盒,450,box.jpg\r\nA002,桌燈,980,lamp.jpg\r\nA001,收納盒,450,box.jpg\r\nA003,,abc,\r\nA004,"椅墊, 米色",320,cushion.jpg';
+    let csvText = '', latest = null;
+    function optionsFor(headers, key, aliases) {
+      const select = $(key);
+      select.replaceChildren(new Option('不檢查', ''));
+      headers.forEach(header => select.add(new Option(header, header)));
+      const chosen = headers.find(header => aliases.includes(header.trim().toLowerCase()));
+      select.value = chosen || '';
+    }
+    function loadText(text, label) {
+      try {
+        const rows = CsvAudit.parseCsv(text);
+        if (rows.length < 2) throw new Error('CSV 至少需要標題列與一筆資料。');
+        const headers = rows[0].map(value => value.trim());
+        if (new Set(headers).size !== headers.length || headers.some(header => !header)) throw new Error('標題列有空白或重複欄位，請先修正。');
+        csvText = text; latest = null;
+        optionsFor(headers, 'sku', ['sku','商品編號','商品貨號','貨號','型號']);
+        optionsFor(headers, 'name', ['商品名稱','品名','名稱','product name','title']);
+        optionsFor(headers, 'price', ['售價','價格','price','定價']);
+        optionsFor(headers, 'image', ['圖片','圖片網址','圖片檔名','image','image url']);
+        $('configure').hidden = false; $('results').hidden = true;
+        $('load-status').textContent = `${label}：讀取 ${rows.length - 1} 筆資料，請確認欄位對應。`;
+      } catch (error) {
+        $('configure').hidden = true; $('results').hidden = true;
+        $('load-status').textContent = `無法讀取：${error.message}`;
+      }
+    }
+    $('sample').addEventListener('click', () => loadText(sample, '虛構範例'));
+    $('file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { $('load-status').textContent = '檔案超過 5 MB，請縮小後重試。'; return; }
+      try {
+        const bytes = await file.arrayBuffer();
+        let text, encoding = 'UTF-8';
+        try { text = new TextDecoder('utf-8', {fatal:true}).decode(bytes); }
+        catch { text = new TextDecoder('big5', {fatal:true}).decode(bytes); encoding = 'Big5'; }
+        loadText(text, `${file.name}（${encoding}）`);
+      } catch { $('load-status').textContent = '檔案解碼失敗，請另存為 UTF-8 CSV 後重試。'; }
+    });
+    $('run').addEventListener('click', () => {
+      try {
+        latest = CsvAudit.auditCsv(csvText, Object.fromEntries(['sku','name','price','image'].map(key => [key, $(key).value])));
+        const stats = [['總筆數',latest.total],['無問題',latest.clean],['待確認',latest.issues.length]];
+        $('summary').replaceChildren(...stats.map(([label,number]) => {
+          const card = document.createElement('div'); card.className = 'stat';
+          const b = document.createElement('b'); b.textContent = number;
+          const span = document.createElement('span'); span.textContent = label;
+          card.append(b,span); return card;
+        }));
+        $('issues').replaceChildren(...latest.issues.slice(0,100).map(item => {
+          const tr = document.createElement('tr');
+          [item.record,item.sku,item.name,item.findings.join('；')].forEach((value,index) => {
+            const td = document.createElement('td'); td.textContent = value; if (index === 3) td.className = 'error'; tr.append(td);
+          }); return tr;
+        }));
+        $('result-note').textContent = latest.issues.length > 100 ? '畫面只顯示前 100 筆，下載檔含全部待確認資料。' : latest.issues.length ? '請人工核對後再匯入賣場。' : '目前選定的檢查項目沒有發現問題；仍請人工核對商品內容。';
+        $('results').hidden = false;
+        $('results').scrollIntoView({behavior:'smooth'});
+      } catch (error) { $('load-status').textContent = `檢查失敗：${error.message}`; }
+    });
+    $('download').addEventListener('click', () => {
+      if (!latest) return;
+      const blob = new Blob([CsvAudit.reportCsv(latest)], {type:'text/csv;charset=utf-8'});
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = '商品資料待確認清單.csv'; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  </script>
+</body>
+</html>
