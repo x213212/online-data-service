@@ -27,6 +27,8 @@
         quoted = true;
       } else if (closedQuote && ch !== ' ' && ch !== '\t') {
         throw new Error('引號結束後出現其他文字，請檢查 CSV 格式。');
+      } else if (ch === '"' && !closedQuote) {
+        throw new Error('未加引號的欄位含有引號，請檢查 CSV 格式。');
       } else if (!closedQuote) {
         field += ch;
       }
@@ -43,6 +45,7 @@
     const rows = parseCsv(text);
     if (rows.length < 2) throw new Error('CSV 至少需要標題列與一筆資料。');
     const headers = rows[0].map(value => value.trim());
+    if (new Set(headers).size !== headers.length) throw new Error('標題列有重複欄名，請先確認欄位。');
     const keys = ['sku', 'name', 'price', 'image'];
     const indexes = {};
     for (const key of keys) {
