@@ -6,6 +6,7 @@
   <meta name="description" content="全遠端 Excel／CSV 資料清理、商品資料建檔與檢查。單一 CSV 小檔案試作 NT$500；500 列資料或 20 項商品 NT$1,500 起。">
   <meta name="theme-color" content="#f5f2eb">
   <link rel="canonical" href="https://x213212.github.io/online-data-service/">
+  <link rel="alternate" hreflang="en" href="https://x213212.github.io/online-data-service/en.html">
   <link rel="sitemap" type="application/xml" href="https://x213212.github.io/online-data-service/sitemap.xml">
   <title>Excel／CSV 資料清理與商品資料建檔｜清序工作室</title>
   <style>
@@ -22,6 +23,7 @@
     .brand span { color:var(--green); }
     nav { display:flex; gap:clamp(12px,2vw,28px); align-items:center; font-size:.94rem; }
     nav a { text-decoration:none; }
+    nav .language { border:1px solid var(--green); border-radius:20px; padding:4px 11px; white-space:nowrap; }
     nav a:hover { color:var(--green); text-decoration:underline; }
     .nav-cta { border:1px solid var(--ink); padding:8px 16px; border-radius:100px; white-space:nowrap; }
     .hero { padding:85px 0 95px; overflow:hidden; }
@@ -79,7 +81,7 @@
     .contact p { color:var(--muted); max-width:580px; margin:0 auto 27px; }
     footer { border-top:1px solid var(--line); padding:24px 0 36px; color:var(--muted); font-size:.84rem; }
     footer .wrap { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
-    @media (max-width:750px) { .hero { padding:55px 0 70px; } .hero-grid,.demo-grid { grid-template-columns:1fr; } .visual { margin:20px 15px 0 0; min-height:380px; } .cards,.process-grid { grid-template-columns:1fr; } .card { min-height:auto; } .pilot { align-items:flex-start; flex-direction:column; } nav a:not(.nav-cta) { display:none; } section { padding:70px 0; } .contact { padding:80px 0; } }
+    @media (max-width:750px) { .hero { padding:55px 0 70px; } .hero-grid,.demo-grid { grid-template-columns:1fr; } .visual { margin:20px 15px 0 0; min-height:380px; } .cards,.process-grid { grid-template-columns:1fr; } .card { min-height:auto; } .pilot { align-items:flex-start; flex-direction:column; } nav a:not(.nav-cta):not(.language) { display:none; } section { padding:70px 0; } .contact { padding:80px 0; } }
     @media (max-width:420px) { .wrap { width:min(100% - 28px,1120px); } .visual { padding:18px; min-height:335px; } .sheet { padding:13px; } th,td { padding:8px 3px; font-size:.69rem; } .visual-foot { bottom:14px; font-size:.66rem; } .nav { min-height:62px; } }
     @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .button { transition:none; } }
   </style>
@@ -89,7 +91,7 @@
     <div class="wrap nav">
       <a class="brand" href="#top">清序<span> / </span>工作室</a>
       <nav aria-label="主選單">
-        <a href="#services">服務</a><a href="#process">合作方式</a><a href="#demo">作品示例</a><a class="nav-cta" href="#contact">詢問合作 ↗</a>
+        <a href="#services">服務</a><a href="#process">合作方式</a><a href="#demo">作品示例</a><a class="language" href="en.html">English</a><a class="nav-cta" href="#contact">詢問合作 ↗</a>
       </nav>
     </div>
   </header>
